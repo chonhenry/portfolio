@@ -1,12 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
+  {% load staticfiles %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
   <meta name="generator" content="Jekyll v3.8.5">
-  <title>Album example · Bootstrap</title>
+  <title>Henry Chon</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
 
@@ -33,34 +34,36 @@
 <body>
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">Henry</a>
+      <a class="navbar-brand" href="{% url 'home' %}">Henry</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link disabled" href="#">Twitter</a>
+            <a class="nav-link" href="https://www.linkedin.com/in/chonhenry/" target="_blank">Linkedin</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Resume</a>
+            <a class="nav-link" href="{% static 'resume.pdf' %}" target="_blank">Resume</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Blog</a>
+            <a class="nav-link" href="{% url 'allblogs' %}">Blog</a>
           </li>
         </ul>
       </div>
     </nav>
   </header>
 <br>
-<br>
+
   <main role="main">
 
     <section class="jumbotron text-center">
       <div class="container">
         <h1 class="jumbotron-heading">Hi, I'm Henry!</h1>
-        <p class="lead text-muted">My name is Henry Chon. I am a second year master student at Baruch College. majoring in quantitative methods and modeling.</p>
+        <p class="lead text-muted">My name is Henry Chon. I am a second year master student at Baruch College, majoring in quantitative methods and modeling.</p>
         <a href="mailto:chonhenry@outlook.com" class="btn btn-primary my-2">Email Me</a>
+        <br><br>
+        <img src="{% static 'portfolio.png' %}" height=300>
       </div>
     </section>
 
