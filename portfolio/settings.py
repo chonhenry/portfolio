@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'jobs.apps.JobsConfig',
     'blog.apps.BlogConfig',
     'home.apps.HomeConfig',
+    'crypto.apps.CryptoConfig',
 ]
 
 MIDDLEWARE = [

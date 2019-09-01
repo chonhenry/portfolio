@@ -25,4 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', home.views.home, name='home'),
     path('blog/', include('blog.urls')),
+    path('crypto/', include('crypto.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + staticfiles_urlpatterns()
