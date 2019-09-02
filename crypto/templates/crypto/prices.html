@@ -1,0 +1,155 @@
+{% extends 'crypto/base.html' %}
+
+{% block content %}
+<br>
+
+<h2>Enter a cryptocurrency symbol into the box to lookup for the price</h2>
+<form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'prices' %}">
+  <br><br><br>
+  {% csrf_token %}
+  <input class="form-control mr-sm-2" type="search" placeholder="Lookup Crypto" aria-label="Search" name="quote">
+  <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Lookup</button>
+</form>
+
+<br>
+
+{% if notfound %}
+<h5>Below are some notable cryptocurrencies; if you can't find the cryptocurrency you want, please visit this <a href="https://www.coinbase.com/price" target="_blank">site</a>.</h5>
+<table class="table table-striped table-bordered table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Cryptocurrency</th>
+      <th scope="col">Symbol</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bitcoin</td>
+      <td>BTC</td>
+    </tr>
+    <tr>
+      <td>Litecoin</td>
+      <td>LTC</td>
+    </tr>
+    <tr>
+      <td>Namecoin</td>
+      <td>NMC</td>
+    </tr>
+    <tr>
+      <td>Peercoin</td>
+      <td>PPC</td>
+    </tr>
+    <tr>
+      <td>Dogecoin</td>
+      <td>DOGE</td>
+    </tr>
+    <tr>
+      <td>Gridcoin</td>
+      <td>GRC</td>
+    </tr>
+    <tr>
+      <td>Primecoin</td>
+      <td>XPM</td>
+    </tr>
+    <tr>
+      <td>Ripple</td>
+      <td>XRP</td>
+    </tr>
+    <tr>
+      <td>Nxt</td>
+      <td>NXT</td>
+    </tr>
+    <tr>
+      <td>Auroracoin</td>
+      <td>AUR</td>
+    </tr>
+    <tr>
+      <td>Dash</td>
+      <td>DASH</td>
+    </tr>
+    <tr>
+      <td>NEO</td>
+      <td>NEO</td>
+    </tr>
+    <tr>
+      <td>MazaCoin</td>
+      <td>MZC</td>
+    </tr>
+    <tr>
+      <td>Monero</td>
+      <td>XMR</td>
+    </tr>
+    <tr>
+      <td>NEM</td>
+      <td>XEM</td>
+    </tr>
+    <tr>
+      <td>PotCoin</td>
+      <td>POT</td>
+    </tr>
+    <tr>
+      <td>Titcoin</td>
+      <td>TIT</td>
+    </tr>
+    <tr>
+      <td>Verge</td>
+      <td>XVG</td>
+    </tr>
+    <tr>
+      <td>Stellar</td>
+      <td>XLM</td>
+    </tr>
+    <tr>
+      <td>Vertcoin</td>
+      <td>VTC</td>
+    </tr>
+    <tr>
+      <td>Ether</td>
+      <td>ETH</td>
+    </tr>
+    <tr>
+      <td>Ethereum Classic</td>
+      <td>ETC</td>
+    </tr>
+    <tr>
+      <td>Tether</td>
+      <td>USDT</td>
+    </tr>
+    <tr>
+      <td>Zcash</td>
+      <td>ZEC</td>
+    </tr>
+    <tr>
+      <td>Bitcoin Cash</td>
+      <td>BCH</td>
+    </tr>
+    <tr>
+      <td>EOS.IO</td>
+      <td>EOS</td>
+    </tr>
+  </tbody>
+</table>
+
+{% else %}
+{% if crypto.Response %}
+
+Sorry, please enter a valid symbol.
+
+{% endif %}
+{% for key,value in crypto.DISPLAY.items %}
+<div class="jumbotron">
+  <h1 class="display-4">{{ key }}</h1>
+  <strong>Name: </strong>{{ key }}<br>
+  <strong>Price: </strong>{{ value.USD.PRICE }}<br>
+  <strong>Day High: </strong>{{ value.USD.HIGHDAY }}<br>
+  <strong>Day Low: </strong>{{ value.USD.LOWDAY }}<br>
+  <strong>Market Cap</strong>{{ value.USD.MKTCAP }}<br>
+</div>
+<br>
+
+{% endfor %}
+
+{% endif %}
+
+
+{% endblock %}
