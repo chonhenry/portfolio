@@ -26,4 +26,5 @@ urlpatterns = [
     path('', home.views.home, name='home'),
     path('blog/', include('blog.urls')),
     path('crypto/', include('crypto.urls')),
+    path('stock/', include('stock.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + staticfiles_urlpatterns()
