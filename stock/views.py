@@ -35,7 +35,7 @@ def add_stock(request):
         if form.is_valid():
             form.save()
             messages.success(request, ("Stock has been added."))
-            return redirect('add_stock')
+            return redirect('add_stock2')
     else:
         ticker = Stock.objects.all()
         output = []
@@ -48,6 +48,7 @@ def add_stock(request):
             except Exception as e:
                 api = "Error..."
 
+        t = type(ticker)
         return render(request, 'stock/add_stock.html', {'ticker': ticker, 'output': output})
 
 def delete(request, stock_id):
