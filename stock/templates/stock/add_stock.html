@@ -24,31 +24,27 @@
       <th scope="col">YTD Change</th>
       <th scope="col">52 Week high</th>
       <th scope="col">52 Week low</th>
+      <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody>
     {% if ticker %}
     {% for item in output %}
     <tr>
-      <th scope="row">{{ item.companyName }}</th>
-      <td>{{ item.symbol }}</td>
-      <td>${{ item.latestPrice }}</td>
-      <td>${{ item.previousClose }}</td>
-      <td>${{ item.marketCap }}</td>
-      <td>{{ item.ytdChange }}</td>
-      <td>${{ item.week52High }}</td>
-      <td>${{ item.week52Low }}</td>
+      <th scope="row">{{ item.0.companyName }}</th>
+      <td>{{ item.0.symbol }}</td>
+      <td>${{ item.0.latestPrice }}</td>
+      <td>${{ item.0.previousClose }}</td>
+      <td>${{ item.0.marketCap }}</td>
+      <td>{{ item.0.ytdChange }}</td>
+      <td>${{ item.0.week52High }}</td>
+      <td>${{ item.0.week52Low }}</td>
+      <td><a href="{% url 'delete' item.1.id %}" class="btn btn-secondary">Delete</a></td>
     </tr>
     {% endfor %}
     {% endif %}
   </tbody>
 </table>
-
-<br>
-
-{% for item in ticker %}
-  <a href="{% url 'delete' item.id %}" class="btn btn-secondary">Delete {{ item }}</a>
-{% endfor %}
 
 <br>
 

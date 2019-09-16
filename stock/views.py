@@ -39,17 +39,21 @@ def add_stock(request):
     else:
         ticker = Stock.objects.all()
         output = []
+        i = 0
 
-        for ticker_item in ticker:
+        #for ticker_item in ticker:
+        while i < len(ticker):
+            ticker_item = ticker[i]
             api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + str(ticker_item) + "/quote?token=pk_59f2b887b82a45b298477654529b5f55")
             try:
                 api = json.loads(api_request.content)
-                output.append(api)
+                output.append([api, ticker_item])
             except Exception as e:
                 api = "Error..."
+            i+=1
 
-        t = type(ticker)
-        return render(request, 'stock/add_stock.html', {'ticker': ticker, 'output': output})
+        lst = len(ticker)
+        return render(request, 'stock/add_stock.html', {'ticker': ticker, 'output': output, 'list': lst})
 
 def delete(request, stock_id):
     item = Stock.objects.get(pk=stock_id)
