@@ -35,7 +35,7 @@ def add_stock(request):
         if form.is_valid():
             form.save()
             messages.success(request, ("Stock has been added."))
-            return redirect('add_stock2')
+            return redirect('add_stock')
     else:
         ticker = Stock.objects.all()
         output = []
