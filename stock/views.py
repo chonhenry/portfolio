@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib import auth
 from .models import Stock
 from .forms import StockForm
 from django.contrib import messages
@@ -64,6 +66,37 @@ def delete(request, stock_id):
 def delete_stock(request):
     ticker = Stock.objects.all()
     return render(request, 'stock/delete_stock.html', {'ticker':ticker})
+
+def signup(request):
+    if request.method=='POST':
+        if request.POST.get('password1') == request.POST.get('password2'):
+            try:
+                user = User.objects.get(username=request.POST['username'])
+                return render(request, 'stock/signup.html', {'error':'Username has been taken.'})
+            except User.DoesNotExist:
+                user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+                auth.login(request, user)
+                return redirect('add_stock')
+        else:
+            return render(request, 'stock/signup.html', {'error2':'Password not match'})
+    else:
+        return render(request, 'stock/signup.html')
+
+def login(request):
+    if request.method=='POST':
+        user = auth.authenticate(username=request.POST['username'], password=request.POST['password'])
+        if user is not None:
+            auth.login(request, user)
+            return redirect('add_stock')
+        else:
+            return render(request, 'stock/login.html', {'error':'username or password is incorrect.'})
+    else:
+        return render(request, 'stock/login.html')
+
+def logout(request):
+    if request.method == 'POST':
+        auth.logout(request)
+        return redirect('stock')
 
 
 

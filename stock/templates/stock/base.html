@@ -27,6 +27,22 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'add_stock' %}">Add Stock</a>
         </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+          <form id='logout' action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="" value="">
+          </form>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+        {% endif %}
       </ul>
       <form action="{% url 'stock' %}" class="form-inline my-2 my-lg-0" method="POST">
         {% csrf_token %}

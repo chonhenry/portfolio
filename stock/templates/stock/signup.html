@@ -1,0 +1,29 @@
+{% extends 'stock/base.html' %}
+
+{% block content %}
+<h1>Sign Up</h1>
+<br>
+<form action="{% url 'signup' %}" method="POST">
+  {% csrf_token %}
+  Username:<br>
+  <input type="text" name="username" value="">
+  {% if error %}
+  <font color="red">{{ error }}</font>
+  {%  endif %}
+  <br><br>
+
+  Password:<br>
+  <input type="password" name="password1" value="">
+  <br><br>
+
+  Confirm Password:<br>
+  <input type="password" name="password2" value="">
+  {% if error2 %}
+  <font color="red">{{ error2 }}</font>
+  {%  endif %}
+  <br><br>
+  
+  <input type="submit" name="" value="Sign Up" class="btn btn-primary">
+</form>
+
+{% endblock %}
