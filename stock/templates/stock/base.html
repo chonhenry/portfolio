@@ -24,10 +24,10 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'stock' %}">Stock</a>
         </li>
+        {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'add_stock' %}">Add Stock</a>
         </li>
-        {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
           <form id='logout' action="{% url 'logout' %}" method="POST">

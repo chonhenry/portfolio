@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from .models import Stock
 from .forms import StockForm
@@ -27,6 +28,7 @@ def home(request):
 def about(request):
     return render(request, 'stock/about.html', {})
 
+#@login_required
 def add_stock(request):
     import requests
     import json
