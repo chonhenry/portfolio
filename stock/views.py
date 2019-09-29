@@ -28,7 +28,7 @@ def home(request):
 def about(request):
     return render(request, 'stock/about.html', {})
 
-@login_required
+#@login_required
 def add_stock(request):
     import requests
     import json
