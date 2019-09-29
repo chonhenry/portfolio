@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from .models import Stock
+from .models import Stock, UserStock
 from .forms import StockForm
 from django.contrib import messages
 
@@ -28,40 +28,44 @@ def home(request):
 def about(request):
     return render(request, 'stock/about.html', {})
 
-#@login_required
+@login_required
 def add_stock(request):
     import requests
     import json
 
     if request.method == 'POST':
-        form = StockForm(request.POST or None)
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, ("Stock has been added."))
+        userstock = UserStock.objects.get(pk = request.user.username)
+        if request.POST.get('ticker') not in userstock.ticker:
+            userstock.ticker = userstock.ticker + ',' + request.POST.get('ticker')
+            userstock.save()
+            return redirect('add_stock')
+        else:
+            messages.success(request, ("Stock is already in the table."))
             return redirect('add_stock')
     else:
-        ticker = Stock.objects.all()
+        userticker = UserStock.objects.get(pk = request.user.username)
+        userticker = userticker.ticker.split(',')
         output = []
         i = 0
 
-        #for ticker_item in ticker:
-        while i < len(ticker):
-            ticker_item = ticker[i]
-            api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + str(ticker_item) + "/quote?token=pk_59f2b887b82a45b298477654529b5f55")
+        for i in userticker:
+            api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + str(i) + "/quote?token=pk_59f2b887b82a45b298477654529b5f55")
             try:
                 api = json.loads(api_request.content)
-                output.append([api, ticker_item])
+                output.append([api, i])
             except Exception as e:
                 api = "Error..."
-            i+=1
 
-        lst = len(ticker)
-        return render(request, 'stock/add_stock.html', {'ticker': ticker, 'output': output, 'list': lst})
+        return render(request, 'stock/add_stock.html', {'output': output, 'username': request.user.username, 'userticker':userticker})
 
-def delete(request, stock_id):
-    item = Stock.objects.get(pk=stock_id)
-    item.delete()
+
+def delete(request, delete_stock):
+    userticker = UserStock.objects.get(pk=request.user.username)
+    stock_list = userticker.ticker.split(',')
+    stock_list.remove(delete_stock.lower())
+    userticker.ticker = ','.join(stock_list)
+    userticker.save()
+
     messages.success(request, ("Stock has been deleted."))
     return redirect('add_stock')
 
@@ -72,12 +76,15 @@ def delete_stock(request):
 def signup(request):
     if request.method=='POST':
         if request.POST.get('password1') == request.POST.get('password2'):
-            try:
+            try: # Username Taken
                 user = User.objects.get(username=request.POST['username'])
                 return render(request, 'stock/signup.html', {'error':'Username has been taken.'})
             except User.DoesNotExist:
                 user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
                 auth.login(request, user)
+
+                userstock = UserStock.objects.create(username=request.POST['username'])
+
                 return redirect('add_stock')
         else:
             return render(request, 'stock/signup.html', {'error2':'Password not match'})

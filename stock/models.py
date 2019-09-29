@@ -6,3 +6,10 @@ class Stock(models.Model):
 
     def __str__(self):
         return self.ticker
+
+class UserStock(models.Model):
+    username = models.CharField(max_length=150, primary_key=True)
+    ticker = models.TextField()
+
+    def __str__(self):
+        return self.username
