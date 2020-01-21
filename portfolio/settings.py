@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'crypto.apps.CryptoConfig',
     'stock.apps.StockConfig',
+    'myblog',
 ]
 
 MIDDLEWARE = [

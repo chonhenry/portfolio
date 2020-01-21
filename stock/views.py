@@ -40,7 +40,7 @@ def add_stock(request):
             userstock.save()
             return redirect('add_stock')
         else:
-            messages.success(request, ("Stock is already in the table."))
+            messages.success(request, ("The stock you entered is already in the table."))
             return redirect('add_stock')
     else:
         userticker = UserStock.objects.get(pk = request.user.username)

@@ -1,0 +1,21 @@
+{% extends 'myblog/base.html' %}
+
+{% block content %}
+
+<div class="jumbotron container">
+  <h1 class="display-4">Welcome to my blog!</h1>
+  <p class="lead">This is my blog. Feel free to browse around.</p>
+</div>
+
+<div class="container">
+   <ul>
+      {% for post in posts %}
+         <li><h1><a href="{% url 'myblog:detail' pk=post.pk%}">{{post.title}}</a></h1>
+         <p>Published on: {{post.create_date}}</p></li>
+      {% endfor %}
+   </ul>
+
+</div>
+
+
+{% endblock %}
